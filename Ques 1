@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct Node {
+    int data;
+    struct Node* next;
+    struct Node* prev;
+};
+struct Node* createNode(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->next = NULL;
+    newNode->prev = NULL;
+    return newNode;
+}
+void displayReverse(struct Node* head) {
+    // Traverse to the last node
+    struct Node* temp = head;
+    while (temp != NULL && temp->next != NULL) {
+        temp = temp->next;
+    }
+    printf("Data in reverse order are :\n");
+    int i = 1;
+    while (temp != NULL) {
+        printf("Data in node %d : %d\n", i++, temp->data);
+        temp = temp->prev;
+    }
+}
+int main() {
+    int n, data;
+    struct Node* head = NULL;
+    struct Node* tail = NULL;
+    printf("Input the number of nodes : ");
+    scanf("%d", &n);
+    for (int i = 1; i <= n; i++) {
+        printf("Input data for node %d : ", i);
+        scanf("%d", &data);
+        struct Node* newNode = createNode(data);
+        if (head == NULL) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail->next = newNode;
+            newNode->prev = tail;
+            tail = newNode;
+        }
+    }
+    displayReverse(head);
+
+    return 0;
+}
